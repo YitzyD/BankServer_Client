@@ -185,12 +185,22 @@ void * startClientUIRunnable(void *arg)
 			{
 				strcpy(input,msg);
 			}
+			else
+			{
+				printf("USE; create <accountname>\n");
+				msg[0] = '\0';
+			}
 		}
 		else if(strStartsWith(input,"serve"))
 		{
 			if(input[5] = ' ')
 			{
 				strcpy(input,msg);
+			}
+			else
+			{
+				printf("USE; serve <accountname>\n");
+				msg[0] = '\0';
 			}
 		}
 		else if(strStartsWith(input,"deposit"))
@@ -199,12 +209,22 @@ void * startClientUIRunnable(void *arg)
 			{
 				strcpy(input,msg);
 			}
+			else
+			{
+				printf("USE; desposit <amount>\n");
+				msg[0] = '\0';
+			}
 		}
 		else if(strStartsWith(input,"withdraw"))
 		{
 			if(input[8] = ' ')
 			{
 				strcpy(input,msg);
+			}
+			else
+			{
+				printf("Use: withdraw <amount>\n");
+				msg[0] = '\0';
 			}
 		}
 		else if(strStartsWith(input,"query"))
@@ -222,11 +242,15 @@ void * startClientUIRunnable(void *arg)
 		else
 		{
 			printf("Invalid command.\n");
+			msg[0] = '\0';
 		}
 		fflush(stdout);
-		if(send(sock,msg,sizeof(msg),0) == -1)
+		if(msg[0] != '\0')
 		{
-			//fprintf(stderr,"error sending %s\n",strerror(errno));
+			if(send(_socket,&msg,sizeof(msg),0) == -1)
+			{
+				fprintf(stderr,"Error sending command to server. %s\n",strerror(errno));
+			}
 		}
 		delay(2);
 	}

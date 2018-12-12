@@ -17,8 +17,9 @@ void onExit();
 pthread_t spawnAccepterThread();
 void checkRunningHandler();
 void *accepterRunnable(void *arg);
-pthread_t spawnNewClientThread(SOCKET *sock);
+pthread_t spawnNewClientThread(int sock);
 void *newClientRunnable(void *arg);
-
+int getAccountIndexByName(char *name);
+void printAccounts();
 
 #endif
